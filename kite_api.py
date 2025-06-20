@@ -11,7 +11,7 @@ app.permanent_session_lifetime = timedelta(days=1)  # Session expires after 1 da
 
 # Swagger configuration
 SWAGGER_URL = '/swagger'
-API_URL = '/static/swagger.json'
+API_URL = '/swagger.json'
 
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
@@ -23,8 +23,10 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
-# Create static directory if it doesn't exist
-os.makedirs('static', exist_ok=True)
+@app.route('/swagger.json')
+def swagger_json():
+    with open('swagger.json', 'r') as f:
+        return f.read(), 200, {'Content-Type': 'application/json'}
 
 # Create Swagger JSON
 swagger_config = {
@@ -281,7 +283,7 @@ swagger_config = {
 }
 
 # Save Swagger configuration
-with open('static/swagger.json', 'w') as f:
+with open('swagger.json', 'w') as f:
     json.dump(swagger_config, f)
 
 def get_kite_instance():
