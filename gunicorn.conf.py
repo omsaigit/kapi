@@ -7,4 +7,5 @@ timeout = 30
 keepalive = 2
 max_requests = 1000
 max_requests_jitter = 50
-preload_app = True 
+preload_app = True
+app_name = "kite_api:app" 

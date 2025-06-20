@@ -43,7 +43,7 @@ python kite_api.py
 3. Configure the service:
    - **Environment**: Python
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `gunicorn --config gunicorn.conf.py kite_api:app`
+   - **Start Command**: `gunicorn wsgi:app --bind 0.0.0.0:$PORT`
    - **Plan**: Free (or choose your preferred plan)
 
 ## API Endpoints
