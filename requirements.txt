@@ -1,4 +1,5 @@
-flask==2.0.1
-flask-swagger-ui==3.36.0
-requests==2.26.0
+Flask==2.3.3
+flask-swagger-ui==4.11.1
+requests==2.31.0
+gunicorn==21.2.0
 python-dateutil==2.8.2 
