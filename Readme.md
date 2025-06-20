@@ -72,6 +72,11 @@ The API uses enctoken-based authentication. After login, include the enctoken in
 
 - Flask 2.3.3
 - flask-swagger-ui 4.11.1
+- flask-cors 4.0.0
 - requests 2.31.0
 - gunicorn 21.2.0
 - python-dateutil 2.8.2
+
+## CORS Support
+
+The API includes CORS (Cross-Origin Resource Sharing) support to allow requests from web browsers and other domains. All origins are allowed by default for development purposes.

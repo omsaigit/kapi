@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, session
 from flask_swagger_ui import get_swaggerui_blueprint
+from flask_cors import CORS
 from kite_trade import KiteApp, get_enctoken
 import json
 import os
@@ -8,6 +9,13 @@ from datetime import timedelta
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Required for session
 app.permanent_session_lifetime = timedelta(days=1)  # Session expires after 1 day
+
+# Enable CORS
+CORS(app, 
+     supports_credentials=True,
+     origins=["*"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     allow_headers=["Content-Type", "Authorization", "X-Enctoken"])
 
 # Swagger configuration
 SWAGGER_URL = '/swagger'
@@ -450,6 +458,15 @@ def cancel_order():
         return jsonify({"status": "success", "order_id": order_id})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route('/', methods=['OPTIONS'])
+@app.route('/<path:path>', methods=['OPTIONS'])
+def handle_preflight(path=None):
+    response = app.make_default_options_response()
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Enctoken'
+    return response
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
